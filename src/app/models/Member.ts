@@ -1,4 +1,4 @@
-import { PhoneState } from "./phoneState";
+import {PhoneState} from './PhoneState';
 
 export class Member {
   id: number;
