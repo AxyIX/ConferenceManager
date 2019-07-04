@@ -11,6 +11,6 @@
       <img src="assets/imgs/online.png" *ngSwitchCase="true">
       <img src="assets/imgs/offline.png" *ngSwitchCase="false">
     </div>
-    <div class="delete">X</div>
+    <div class="delete" (click)="onDelete(member)">X</div>
   </div>
 </div>
