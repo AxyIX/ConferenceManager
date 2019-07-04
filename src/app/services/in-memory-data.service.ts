@@ -10,16 +10,16 @@ import {Group} from '../models/Group';
 export class InMemoryDataService implements InMemoryDbService {
 
   members: Member[] = [
-    {id: 0, name: 'vasia pupochkin', active: false, phoneState: PhoneState.IDLE},
-    {id: 1, name: 'ivan ivanov', active: true, phoneState: PhoneState.CALL},
-    {id: 3, name: 'pavel ibragimov', active: false, phoneState: PhoneState.IDLE},
-    {id: 4, name: 'vasia pupochkin2', active: false, phoneState: PhoneState.IDLE},
-    {id: 5, name: 'ivan ivanov2', active: true, phoneState: PhoneState.CALL},
-    {id: 6, name: 'pavel ibragimov2', active: false, phoneState: PhoneState.IDLE},
-    {id: 7, name: 'pavel ibragimov2', active: false, phoneState: PhoneState.IDLE},
-    {id: 8, name: 'pavel ibragimov2', active: false, phoneState: PhoneState.IDLE},
-    {id: 9, name: 'pavel ibragimov2', active: false, phoneState: PhoneState.IDLE},
-    {id: 10, name: 'pavel ibragimov2', active: false, phoneState: PhoneState.IDLE},
+    {id: 0, name: 'Иван Иванов', active: false, phoneState: PhoneState.IDLE},
+    {id: 1, name: 'Михаил Михайлов', active: true, phoneState: PhoneState.CALL},
+    {id: 3, name: 'Павел Павлов', active: false, phoneState: PhoneState.IDLE},
+    {id: 4, name: 'Василий Васин', active: false, phoneState: PhoneState.IDLE},
+    {id: 5, name: 'Алексей Алексеев', active: true, phoneState: PhoneState.CALL},
+    {id: 6, name: 'Дмитрий Дмитриев', active: false, phoneState: PhoneState.IDLE},
+    {id: 7, name: 'Николай Николаев', active: false, phoneState: PhoneState.IDLE},
+    {id: 8, name: 'Денис Денисов', active: false, phoneState: PhoneState.IDLE},
+    {id: 9, name: 'Станислав Стасов', active: false, phoneState: PhoneState.IDLE},
+    {id: 10, name: 'Роман Романов', active: false, phoneState: PhoneState.IDLE},
   ];
 
   groupsMembers: Member[] = [];
