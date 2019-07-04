@@ -47,7 +47,7 @@ export class InMemoryDataService implements InMemoryDbService {
     return {groups: this.groups, members: this.groupsMembers};
   }
 
-  delete(req: RequestInfo) {
+  delete(req) {
     console.log('req', req);
     console.log('data', req.resourceUrl);
     switch (req.resourceUrl) {
