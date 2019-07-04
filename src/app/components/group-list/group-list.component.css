@@ -40,3 +40,8 @@ a:visited {
   height: 100%;
   padding: 20px;
 }
+
+app-member-list {
+  width: 80%;
+  height: 80%;
+}

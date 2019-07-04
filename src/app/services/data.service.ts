@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {Group} from '../models/Group';
 import {PhoneState} from '../models/PhoneState';
 import {Observable, of} from 'rxjs';
-import {Member} from '../models/Member';
 
 @Injectable({
   providedIn: 'root'
