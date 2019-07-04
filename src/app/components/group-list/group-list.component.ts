@@ -32,12 +32,14 @@ export class GroupListComponent implements OnInit {
       if (groupId != null) {
         const id = +groupId;
         this.members = this.groups.find(group => id === group.id).members;
+        debugger;
         return;
       }
       let members = [];
       this.groups.forEach(group => {
         members = [...members, ...group.members];
       });
+      debugger;
       this.members = members;
     });
   }

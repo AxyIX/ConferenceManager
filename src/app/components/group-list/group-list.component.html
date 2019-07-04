@@ -1,15 +1,17 @@
 <div class="wrapper">
   <div class="groups-container">
-    <div routerLinkActive="selected" [routerLinkActiveOptions]="{exact: true}">
-      <a [routerLink]="['/groups']">
+    <a [routerLink]="['/groups']">
+      <div routerLinkActive="selected" [routerLinkActiveOptions]="{exact: true}">
         <span>Все ({{membersCount}})</span>
-      </a>
-    </div>
-    <div *ngFor="let group of groups" routerLinkActive="selected">
-      <a [routerLink]="['/groups']" [queryParams]="{id: group.id}">
-        <span>{{group.name}} </span><span>({{group.members.length}})</span>
-      </a>
-    </div>
+      </div>
+    </a>
+    <a *ngFor="let group of groups" [routerLink]="['/groups']" [queryParams]="{id: group.id}">
+      <div routerLinkActive="selected">
+        <div>
+          <span>{{group.name}} </span><span>({{group.members.length}})</span>
+        </div>
+      </div>
+    </a>
   </div>
 
   <app-member-list [members]="members"></app-member-list>
