@@ -1,6 +1,6 @@
 <div *ngIf="members" class="members-container">
   <div *ngFor="let member of members">
-    <div class="icon"></div>
+    <div class="icon"><img src="assets/imgs/member.png"/></div>
     <div class="name">{{member.name}}</div>
     <div class="phone-state" [ngSwitch]="member.phoneState">
       <img src="assets/imgs/phone-idle.png" *ngSwitchCase="phoneState.IDLE">

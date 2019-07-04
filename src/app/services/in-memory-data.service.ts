@@ -26,10 +26,14 @@ export class InMemoryDataService implements InMemoryDbService {
 
   groups: Group[] = [
     {
-      id: 0, name: 'Группа 1', members: []
+      id: 0, name: 'Группа 1', members: [
+        this.members[0], this.members[1], this.members[2],
+      ]
     },
     {
-      id: 1, name: 'Группа 2', members: []
+      id: 1, name: 'Группа 2', members: [
+        this.members[3], this.members[4],
+      ]
     },
     {
       id: 2, name: 'Группа 3', members: []
@@ -37,20 +41,13 @@ export class InMemoryDataService implements InMemoryDbService {
   ];
 
   constructor() {
-    this.addMemberToGroup(0, 0);
-    this.addMemberToGroup(0, 1);
-    this.addMemberToGroup(0, 2);
-    this.addMemberToGroup(1, 3);
-    this.addMemberToGroup(1, 5);
-    this.addMemberToGroup(2, 6);
-    this.addMemberToGroup(2, 8);
   }
 
   createDb() {
     return {groups: this.groups, members: this.groupsMembers};
   }
 
-  delete(req: Request) {
+  /* delete(req: Request) {
     console.log('req', req);
     console.log('data', req.resourceUrl);
     switch (req.resourceUrl) {
@@ -58,7 +55,7 @@ export class InMemoryDataService implements InMemoryDbService {
         this.deleteMemberFromGroup(+req.query.get('groupId'), +req.query.get('memberId'));
         break;
     }
-  }
+  } */
 
   addMemberToGroup(groupId, memberId) {
     const member = this.members.find(m => m.id === memberId);

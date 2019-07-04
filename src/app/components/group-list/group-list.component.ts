@@ -3,7 +3,6 @@ import {ActivatedRoute} from '@angular/router';
 
 import {Group} from '../../models/Group';
 import {DataService} from '../../services/data.service';
-import {Member} from '../../models/Member';
 import {WebsocketEmulatorService} from '../../services/websocket-emulator.service';
 
 @Component({
@@ -14,20 +13,18 @@ import {WebsocketEmulatorService} from '../../services/websocket-emulator.servic
 export class GroupListComponent implements OnInit {
   groups: Group[];
   membersCount: number;
-  members: Member[];
-
-  constructor(private dataService: DataService, private route: ActivatedRoute, private webSocket: WebsocketEmulatorService) {
+  groupId: string;
+  constructor(private dataService: DataService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.getGroups();
     this.onRouteChange();
+    this.getGroups();
   }
 
   onRouteChange(): void {
     this.route.queryParams.subscribe(queryParams => {
-      if (!this.groups) { return; }
-      this.getMembers(queryParams.id);
+      this.groupId = queryParams.id;
     });
   }
 
@@ -35,24 +32,23 @@ export class GroupListComponent implements OnInit {
     this.dataService.getGroups().subscribe(groups => {
       this.groups = groups;
       this.membersCount = 0;
-      this.groups.map(group => {
+      groups.map(group => {
         this.membersCount += group.members.length;
       });
-      this.getMembers(this.route.snapshot.queryParams.id);
     });
   }
 
-  getMembers(groupId: string): void {
-    if (groupId != null) {
-      const id = +groupId;
-      this.members = this.groups.find(group => id === group.id).members;
-      return;
+  get currentMembers() {
+    if (!this.groups) { return []; }
+    if (this.groupId !== undefined) {
+      const id = +this.groupId;
+      return this.groups.find(group => id === group.id).members;
     }
     let members = [];
     this.groups.forEach(group => {
       members = [...members, ...group.members];
     });
-    this.members = members;
+    return members;
   }
 
 }
