@@ -12,13 +12,12 @@ import {WebsocketEmulatorService} from '../../services/websocket-emulator.servic
 })
 export class GroupListComponent implements OnInit {
   groups: Group[];
-  membersCount: number;
+
   groupId: string;
   constructor(private dataService: DataService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.onRouteChange();
     this.getGroups();
   }
 
@@ -28,18 +27,23 @@ export class GroupListComponent implements OnInit {
     });
   }
 
+  get membersCount() {
+    let count = 0;
+    this.groups.map(group => {
+      count += group.members.length;
+    });
+    return count;
+  }
+
   getGroups(): void {
     this.dataService.getGroups().subscribe(groups => {
       this.groups = groups;
-      this.membersCount = 0;
-      groups.map(group => {
-        this.membersCount += group.members.length;
-      });
+      this.onRouteChange();
     });
   }
 
   get currentMembers() {
-    if (!this.groups) { return []; }
+    if (!this.groups) { return; }
     if (this.groupId !== undefined) {
       const id = +this.groupId;
       return this.groups.find(group => id === group.id).members;

@@ -47,7 +47,7 @@ export class InMemoryDataService implements InMemoryDbService {
     return {groups: this.groups, members: this.groupsMembers};
   }
 
-  /* delete(req: Request) {
+  delete(req: RequestInfo) {
     console.log('req', req);
     console.log('data', req.resourceUrl);
     switch (req.resourceUrl) {
@@ -55,7 +55,7 @@ export class InMemoryDataService implements InMemoryDbService {
         this.deleteMemberFromGroup(+req.query.get('groupId'), +req.query.get('memberId'));
         break;
     }
-  } */
+  }
 
   addMemberToGroup(groupId, memberId) {
     const member = this.members.find(m => m.id === memberId);
