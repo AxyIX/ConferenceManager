@@ -31,8 +31,8 @@ export class DataService {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
-    const url = `${this.baseUrl}/${id}/members/${member.id}`;
-    return this.client.delete(url).pipe(
+    const url = `${this.baseUrl}/?groupId=${id}&memberId=${member.id}`;
+    return this.client.delete(url, httpOptions).pipe(
       catchError(error => {
         console.log(error);
         return of([]);

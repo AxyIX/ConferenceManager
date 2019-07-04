@@ -50,9 +50,27 @@ export class InMemoryDataService implements InMemoryDbService {
     return {groups: this.groups, members: this.groupsMembers};
   }
 
+  delete(req: Request) {
+    console.log('req', req);
+    console.log('data', req.resourceUrl);
+    switch (req.resourceUrl) {
+      case 'api/groups/':
+        this.deleteMemberFromGroup(+req.query.get('groupId'), +req.query.get('memberId'));
+        break;
+    }
+  }
+
   addMemberToGroup(groupId, memberId) {
     const member = this.members.find(m => m.id === memberId);
     this.groups.find(g => g.id === groupId).members.push(member);
     this.groupsMembers.push(member);
+  }
+
+  deleteMemberFromGroup(groupId, memberId) {
+    const group = this.groups.find(g => g.id === groupId);
+    if (group) {
+      group.members = group.members.filter( m => m.id !== memberId);
+    }
+    console.log('server groups', this.groups);
   }
 }

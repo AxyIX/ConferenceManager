@@ -4,6 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Group} from '../../models/Group';
 import {DataService} from '../../services/data.service';
 import {Member} from '../../models/Member';
+import {WebsocketEmulatorService} from '../../services/websocket-emulator.service';
 
 @Component({
   selector: 'app-group-list',
@@ -15,7 +16,7 @@ export class GroupListComponent implements OnInit {
   membersCount: number;
   members: Member[];
 
-  constructor(private dataService: DataService, private route: ActivatedRoute) {
+  constructor(private dataService: DataService, private route: ActivatedRoute, private webSocket: WebsocketEmulatorService) {
   }
 
   ngOnInit() {
