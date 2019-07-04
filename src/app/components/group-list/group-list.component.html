@@ -6,7 +6,7 @@
       </a>
     </div>
     <div *ngFor="let group of groups" routerLinkActive="selected">
-      <a [routerLink]="['/groups', group.id]">
+      <a [routerLink]="['/groups']" [queryParams]="{id: group.id}">
         <span>{{group.name}} </span><span>({{group.members.length}})</span>
       </a>
     </div>

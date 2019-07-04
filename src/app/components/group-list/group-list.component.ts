@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+
 import {Group} from '../../models/Group';
 import {DataService} from '../../services/data.service';
-import {ActivatedRoute} from '@angular/router';
 import {Member} from '../../models/Member';
 
 @Component({
@@ -12,45 +13,33 @@ import {Member} from '../../models/Member';
 export class GroupListComponent implements OnInit {
   groups: Group[];
   membersCount: number;
-  members: Member[];
-  constructor(private dataService: DataService, private router: ActivatedRoute) { }
+  members: Member[] = [];
 
-  ngOnInit() {
-    this.getGroups();
-    this.onRouteChange();
+  constructor(private dataService: DataService, private route: ActivatedRoute) {
   }
 
-  getGroups(): void {
+  ngOnInit() {
     this.dataService.getGroups().subscribe(groups => {
       this.groups = groups;
       this.membersCount = 0;
       this.groups.map(group => {
         this.membersCount += group.members.length;
       });
-      this.getMembers(this.router.snapshot.paramMap.get('groupId'));
     });
-  }
 
-  getMembers(groupId: string): void {
-    if (groupId !== undefined && groupId !== null) {
-      const id = +groupId;
-      this.members = this.groups.find(group => id === group.id).members;
-      return;
-    }
-    const members = [];
-    this.groups.map(group => {
-      group.members.map(member => {
-        members.push(member);
+    this.route.queryParams.subscribe(queryParams => {
+      const groupId = queryParams.id;
+      if (groupId != null) {
+        const id = +groupId;
+        this.members = this.groups.find(group => id === group.id).members;
+        return;
+      }
+      let members = [];
+      this.groups.forEach(group => {
+        members = [...members, ...group.members];
       });
-    });
-    this.members = members;
-  }
-
-  onRouteChange() {
-    this.router.params.subscribe(params => {
-      this.getMembers(params.get('groupId'));
+      this.members = members;
     });
   }
-
 
 }
