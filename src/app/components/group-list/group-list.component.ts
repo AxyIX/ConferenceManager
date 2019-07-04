@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Group} from '../../models/Group';
 import {DataService} from '../../services/data.service';
 import {ActivatedRoute} from '@angular/router';
+import {Member} from '../../models/Member';
 
 @Component({
   selector: 'app-group-list',
@@ -11,6 +12,7 @@ import {ActivatedRoute} from '@angular/router';
 export class GroupListComponent implements OnInit {
   groups: Group[];
   membersCount: number;
+  members: Member[];
   constructor(private dataService: DataService, private router: ActivatedRoute) { }
 
   ngOnInit() {
@@ -21,6 +23,20 @@ export class GroupListComponent implements OnInit {
         this.membersCount += group.members.length;
       });
     });
+    this.router.paramMap.subscribe(params => {
+      const groupId = +params.get('groupId');
+      console.log(groupId);
+      if (!isNaN(groupId)) {
+        this.members = this.groups.find(group => groupId === group.id).members;
+        return;
+      }
+      const members = [];
+      this.groups.map(group => {
+        members.push(...group.members);
+      })
+      this.members = members;
+    });
   }
+
 
 }

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import {Member} from '../../models/Member';
+import {PhoneState} from '../../models/PhoneState';
 
 @Component({
   selector: 'app-member-list',
@@ -6,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./member-list.component.css']
 })
 export class MemberListComponent implements OnInit {
-
+  @Input() members: Member[];
+  phoneState = PhoneState;
   constructor() { }
 
   ngOnInit() {

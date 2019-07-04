@@ -1,1 +1,16 @@
-<p>member-list works!</p>
+<div class="members-container">
+  <div *ngFor="let member of members">
+    <div class="icon"></div>
+    <div class="name">{{member.name}}</div>
+    <div class="phone-state" [ngSwitch]="member.phoneState">
+      <img src="../../../assets/imgs/phone-idle.png" *ngSwitchCase="phoneState.IDLE">
+      <img src="../../../assets/imgs/phone-call.png" *ngSwitchCase="phoneState.CALL">
+      <img src="../../../assets/imgs/phone-alert.png" *ngSwitchCase="phoneState.ALERT">
+    </div>
+    <div class="active" [ngSwitch]="member.active">
+      <img src="../../../assets/imgs/online.png" *ngSwitchCase="true">
+      <img src="../../../assets/imgs/offline.png" *ngSwitchCase="false">
+    </div>
+    <div class="delete">X</div>
+  </div>
+</div>
