@@ -14,23 +14,23 @@ export class WebsocketEmulatorService {
     {id: 3, name: 'Павел Павлов', active: false, phoneState: PhoneState.IDLE},
     {id: 4, name: 'Василий Васин', active: false, phoneState: PhoneState.IDLE},
     {id: 5, name: 'Алексей Алексеев', active: true, phoneState: PhoneState.CALL},
-    /* {id: 6, name: 'Дмитрий Дмитриев', active: false, phoneState: PhoneState.IDLE},
+    {id: 6, name: 'Дмитрий Дмитриев', active: false, phoneState: PhoneState.IDLE},
     {id: 7, name: 'Николай Николаев', active: false, phoneState: PhoneState.IDLE},
     {id: 8, name: 'Денис Денисов', active: false, phoneState: PhoneState.IDLE},
     {id: 9, name: 'Станислав Стасов', active: false, phoneState: PhoneState.IDLE},
-    {id: 10, name: 'Роман Романов', active: false, phoneState: PhoneState.IDLE}, */
+    {id: 10, name: 'Роман Романов', active: false, phoneState: PhoneState.IDLE},
   ];
 
   groups: Group[] = [
     {
       id: 0, name: 'Группа 1', members: []
     },
-    /* {
+    {
       id: 1, name: 'Группа 2', members: []
     },
     {
       id: 2, name: 'Группа 3', members: []
-    } */
+    }
   ];
 
   constructor() {
@@ -55,7 +55,6 @@ export class WebsocketEmulatorService {
           break;
       }
       console.log(this.groups[0]);
-      debugger;
     });
   }
 
