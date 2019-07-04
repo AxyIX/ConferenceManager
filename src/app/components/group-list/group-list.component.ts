@@ -24,8 +24,8 @@ export class GroupListComponent implements OnInit {
   }
 
   onRouteChange(): void {
-    if (!this.groups) { return; }
     this.route.queryParams.subscribe(queryParams => {
+      if (!this.groups) { return; }
       this.getMembers(queryParams.id);
     });
   }
