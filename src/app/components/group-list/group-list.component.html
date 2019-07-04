@@ -1,5 +1,5 @@
 <div class="wrapper">
-  <div class="groups-container">
+  <div *ngIf="groups" class="groups-container">
     <a [routerLink]="['/groups']">
       <div routerLinkActive="selected" [routerLinkActiveOptions]="{exact: true}">
         <span>Все ({{membersCount}})</span>

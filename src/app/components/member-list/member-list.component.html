@@ -1,4 +1,4 @@
-<div class="members-container">
+<div *ngIf="members" class="members-container">
   <div *ngFor="let member of members">
     <div class="icon"></div>
     <div class="name">{{member.name}}</div>
