@@ -16,30 +16,39 @@ export class GroupListComponent implements OnInit {
   constructor(private dataService: DataService, private router: ActivatedRoute) { }
 
   ngOnInit() {
+    this.getGroups();
+    this.onRouteChange();
+  }
+
+  getGroups(): void {
     this.dataService.getGroups().subscribe(groups => {
       this.groups = groups;
       this.membersCount = 0;
       this.groups.map(group => {
         this.membersCount += group.members.length;
       });
+      this.getMembers(this.router.snapshot.paramMap.get('groupId'));
     });
-    this.router.paramMap.subscribe(params => {
-      const groupId = params.get('groupId');
-      console.log(groupId);
-      if (groupId !== undefined && groupId !== null) {
-        const id = +groupId;
-        this.members = this.groups.find(group => id === group.id).members;
-        console.log(this.members);
-        return;
-      }
-      const members = [];
-      this.groups.map(group => {
-        group.members.map(member => {
-          members.push(member);
-        });
+  }
+
+  getMembers(groupId: string): void {
+    if (groupId !== undefined && groupId !== null) {
+      const id = +groupId;
+      this.members = this.groups.find(group => id === group.id).members;
+      return;
+    }
+    const members = [];
+    this.groups.map(group => {
+      group.members.map(member => {
+        members.push(member);
       });
-      this.members = members;
-      console.log(this.members);
+    });
+    this.members = members;
+  }
+
+  onRouteChange() {
+    this.router.params.subscribe(params => {
+      this.getMembers(params.get('groupId'));
     });
   }
 

@@ -1,30 +1,26 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
+import {catchError} from 'rxjs/operators';
 
 import {Group} from '../models/Group';
-import {PhoneState} from '../models/PhoneState';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-  groups: Group[];
-  constructor() {
-    this.groups = [
-      { id: 0, name: 'group 1', members: [
-          { id: 0, name: 'vasia pupochkin', active: false, phoneState: PhoneState.IDLE },
-          { id: 1, name: 'ivan ivanov', active: true, phoneState: PhoneState.CALL },
-          { id: 3, name: 'pavel ibragimov', active: false, phoneState: PhoneState.IDLE },
-        ] },
-      { id: 1, name: 'group 2', members: [
-          { id: 4, name: 'vasia pupochkin2', active: false, phoneState: PhoneState.IDLE },
-          { id: 5, name: 'ivan ivanov2', active: true, phoneState: PhoneState.CALL },
-          { id: 6, name: 'pavel ibragimov2', active: false, phoneState: PhoneState.IDLE },
-        ] }
-    ];
+  private baseUrl = 'api/groups';
+  constructor(private client: HttpClient) {
   }
 
   getGroups(): Observable<Group[]> {
-    return of(this.groups);
+    return this.client.get<Group[]>(this.baseUrl).pipe(
+      catchError(error => {
+        console.log(error);
+        return of([]);
+      })
+    );
   }
+
+
 }

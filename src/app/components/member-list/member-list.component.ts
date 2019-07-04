@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import {Member} from '../../models/Member';
 import {PhoneState} from '../../models/PhoneState';
 
@@ -7,17 +7,18 @@ import {PhoneState} from '../../models/PhoneState';
   templateUrl: './member-list.component.html',
   styleUrls: ['./member-list.component.css']
 })
-export class MemberListComponent implements OnInit {
-  members: Member[];
+export class MemberListComponent implements OnInit, OnChanges {
+  @Input() members: Member[];
   phoneState = PhoneState;
   constructor() { }
 
   ngOnInit() {
   }
 
-  @Input()
-  set setMembers(members: Member[]) {
-    this.members = members;
+  ngOnChanges(changes: SimpleChanges) {
+    console.log('new members', changes.members.currentValue);
+    this.members = changes.members.currentValue;
+    console.log('current members', this.members);
   }
 
 }
