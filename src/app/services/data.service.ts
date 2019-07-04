@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
+import {Observable, of} from 'rxjs';
+
 import {Group} from '../models/Group';
 import {PhoneState} from '../models/PhoneState';
-import {Observable, of} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

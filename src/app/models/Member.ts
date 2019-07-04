@@ -1,6 +1,6 @@
 import {PhoneState} from './PhoneState';
 
-export class Member {
+export interface Member {
   id: number;
   name: string;
   active: boolean;

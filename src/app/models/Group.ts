@@ -1,6 +1,6 @@
 import {Member} from './Member';
 
-export class Group {
+export interface Group {
   id: number;
   name: string;
   members: Member[];

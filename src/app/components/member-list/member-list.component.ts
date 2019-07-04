@@ -8,11 +8,16 @@ import {PhoneState} from '../../models/PhoneState';
   styleUrls: ['./member-list.component.css']
 })
 export class MemberListComponent implements OnInit {
-  @Input() members: Member[];
+  members: Member[];
   phoneState = PhoneState;
   constructor() { }
 
   ngOnInit() {
+  }
+
+  @Input()
+  set setMembers(members: Member[]) {
+    this.members = members;
   }
 
 }
