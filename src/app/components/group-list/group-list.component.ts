@@ -13,35 +13,47 @@ import {Member} from '../../models/Member';
 export class GroupListComponent implements OnInit {
   groups: Group[];
   membersCount: number;
-  members: Member[] = [];
+  members: Member[];
 
   constructor(private dataService: DataService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
+    this.getGroups();
+    this.onRouteChange();
+  }
+
+  onRouteChange(): void {
+    if (!this.groups) { return; }
+    this.route.queryParams.subscribe(queryParams => {
+      this.getMembers(queryParams.id);
+    });
+  }
+
+  getGroups(): void {
     this.dataService.getGroups().subscribe(groups => {
       this.groups = groups;
       this.membersCount = 0;
       this.groups.map(group => {
         this.membersCount += group.members.length;
       });
+      this.getMembers(this.route.snapshot.queryParams.id);
     });
+  }
 
-    this.route.queryParams.subscribe(queryParams => {
-      const groupId = queryParams.id;
-      if (groupId != null) {
-        const id = +groupId;
-        this.members = this.groups.find(group => id === group.id).members;
-        debugger;
-        return;
-      }
-      let members = [];
-      this.groups.forEach(group => {
-        members = [...members, ...group.members];
-      });
+  getMembers(groupId: string): void {
+    if (groupId != null) {
+      const id = +groupId;
+      this.members = this.groups.find(group => id === group.id).members;
       debugger;
-      this.members = members;
+      return;
+    }
+    let members = [];
+    this.groups.forEach(group => {
+      members = [...members, ...group.members];
     });
+    debugger;
+    this.members = members;
   }
 
 }
