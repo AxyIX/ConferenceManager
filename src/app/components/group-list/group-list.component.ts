@@ -24,17 +24,22 @@ export class GroupListComponent implements OnInit {
       });
     });
     this.router.paramMap.subscribe(params => {
-      const groupId = +params.get('groupId');
+      const groupId = params.get('groupId');
       console.log(groupId);
-      if (!isNaN(groupId)) {
-        this.members = this.groups.find(group => groupId === group.id).members;
+      if (groupId !== undefined && groupId !== null) {
+        const id = +groupId;
+        this.members = this.groups.find(group => id === group.id).members;
+        console.log(this.members);
         return;
       }
       const members = [];
       this.groups.map(group => {
-        members.push(...group.members);
-      })
+        group.members.map(member => {
+          members.push(member);
+        });
+      });
       this.members = members;
+      console.log(this.members);
     });
   }
 
