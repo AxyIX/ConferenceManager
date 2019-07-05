@@ -55,7 +55,7 @@ export class InMemoryDataService implements InMemoryDbService {
   delete(req) {
     switch (req.resourceUrl) {
       case 'api/groups/':
-        this.deleteMemberFromGroup(+req.query.get('groupId'), +req.query.get('memberId'));
+        // this.deleteMemberFromGroup(+req.query.get('groupId'), +req.query.get('memberId'));
         break;
     }
   }
@@ -64,11 +64,6 @@ export class InMemoryDataService implements InMemoryDbService {
     const group = this.groups.find(g => g.id === groupId);
     if (group) {
       group.members = group.members.filter( m => m.id !== memberId);
-      const message: WebsocketMessage = {
-        type: WebsocketEvent.MEMBER_LEAVE_GROUP,
-        data: {groupId, memberId}
-      };
-      this.websocketMessages$.next(message);
     }
   }
 }

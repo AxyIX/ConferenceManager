@@ -6,6 +6,7 @@ import {Group} from '../../models/Group';
 import {DataService} from '../../services/data.service';
 import {WebsocketEvent} from '../../websocket/websocket-event.enum';
 import {WebsocketEmulatorService} from '../../websocket/websocket-emulator.service';
+import {Member} from '../../models/Member';
 
 @Component({
   selector: 'app-group-list',
@@ -70,20 +71,28 @@ export class GroupListComponent implements OnInit, OnDestroy {
     return members;
   }
 
+  deleteMember = (member) => {
+    const id = +this.groupId;
+    const group = this.groups.find(g => g.id === id);
+    group.members = group.members.filter(m => m.id !== member.id);
+  }
+
   private subscribeToWs() {
     this.onMemberChangeStatus = this.websocketEmulatorService.on(WebsocketEvent.CHANGE_STATUS).subscribe(event => {
       const currentMember = this.allMembers.find( m => m.id === event.data.member.id);
+      if (!currentMember) {
+        return;
+      }
       currentMember.phoneState = event.data.member.phoneState;
       currentMember.active = event.data.member.active;
       }
     );
     this.onMemberEnterToGroup = this.websocketEmulatorService.on(WebsocketEvent.MEMBER_ADD).subscribe(event => {
+      const currentMember = this.allMembers.find( m => m.id === event.data.member.id);
+      if (currentMember) {
+        return;
+      }
       this.groups[event.data.groupId].members.push(event.data.member);
-    });
-
-    this.onMemberLeaveGroup = this.websocketEmulatorService.on(WebsocketEvent.MEMBER_LEAVE_GROUP).subscribe(event => {
-      alert('delete user');
-      this.groups[event.data.groupId].members = this.groups[event.data.groupId].members.filter(m => m.id !== event.data.memberId);
     });
   }
 

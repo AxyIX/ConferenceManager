@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 
 import {Member} from '../../models/Member';
 import {PhoneState} from '../../models/PhoneState';
@@ -15,11 +15,18 @@ export class MemberListComponent {
   phoneState = PhoneState;
 
   @Input() members: Member[];
+  @Input() deleteMember;
 
-  constructor(private dataService: DataService, private route: ActivatedRoute) { }
+  constructor(private dataService: DataService, private route: ActivatedRoute) {
+  }
 
   onDelete(member: Member): void {
-    this.dataService.deleteMemberFromGroup(this.route.snapshot.queryParams.id, member).subscribe();
+    this.dataService.deleteMemberFromGroup(this.route.snapshot.queryParams.id, member).subscribe(event => {
+      if (event === '200') {
+        this.deleteMember(member);
+      }
+    })
+    ;
   }
 
 }

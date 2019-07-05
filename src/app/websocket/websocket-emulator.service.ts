@@ -51,9 +51,9 @@ export class WebsocketEmulatorService {
             return;
           }
           const groupId = Math.floor(Math.random() * this.groups.length);
-          this.addMemberToGroup(groupId, member);
+          // this.addMemberToGroup(groupId, member);
           message.type = WebsocketEvent.MEMBER_ADD;
-          message.data = {...message.data, groupId}
+          message.data = {...message.data, groupId};
           break;
       }
 

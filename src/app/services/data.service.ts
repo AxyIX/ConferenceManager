@@ -23,7 +23,7 @@ export class DataService {
     );
   }
 
-  deleteMemberFromGroup(id: number, member: Member): Observable<any> {
+  deleteMemberFromGroup(id: number, member: Member): Observable<string> {
     if (id === undefined) {
       return of(undefined);
     }
@@ -31,11 +31,12 @@ export class DataService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
     const url = `${this.baseUrl}/?groupId=${id}&memberId=${member.id}`;
-    return this.client.delete(url, httpOptions).pipe(
+    this.client.delete(url, httpOptions).pipe(
       catchError(error => {
         console.log(error);
-        return of([]);
+        return of('500');
       })
     );
+    return of('200');
   }
 }
