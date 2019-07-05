@@ -1,28 +1,29 @@
-# ConferenceManager
+## Описание
+Web-приложение эмулятор менеджера конференций.
+## Инструкция по запуску/сборке проекта
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.6.
+Для запуска проекта необходимо иметь установленные Node.js и Angular CLI.
+Инструкции по установке можно найти на официальных сайтах:
+- для Node.js - [https://nodejs.org/en/download/](https://nodejs.org/en/download/ "https://nodejs.org/en/download/")
+- для Angular CLI - [https://angular.io/guide/setup-local#step-1-install-the-angular-cli](https://angular.io/guide/setup-local#step-1-install-the-angular-cli "https://angular.io/guide/setup-local#step-1-install-the-angular-cli")
 
-## Development server
+Также, перед запуском/сборкой приложения необходимо выполнить команду в директории проекта:
+```
+npm install
+```
+Таким образом, npm установит используемые зависимости.
+### Запуск проекта
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+В директории с проектом выполните команду
+```
+ng serve -o
+```
+После этого Angular CLI запустит локальный сервер и откроет приложение в браузере по умолчанию.
 
-## Code scaffolding
+### Сборка проекта
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
-****
+В директории с проектом выполните команду
+```
+ng build --prod
+```
+Собранное приложение будет доступно в директории `dist`.
