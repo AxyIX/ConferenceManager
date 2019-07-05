@@ -1,20 +1,29 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {Subscription} from 'rxjs';
 
 import {Group} from '../../models/Group';
 import {DataService} from '../../services/data.service';
-import {WebsocketEmulatorService} from '../../services/websocket-emulator.service';
+import {WebsocketEmulatorService} from '../../websocket/websocket-emulator.service';
+import {WebsocketEvent} from '../../websocket/websocket-event.enum';
 
 @Component({
   selector: 'app-group-list',
   templateUrl: './group-list.component.html',
   styleUrls: ['./group-list.component.css']
 })
-export class GroupListComponent implements OnInit {
+export class GroupListComponent implements OnInit, OnDestroy {
+
   groups: Group[];
 
   groupId: string;
-  constructor(private dataService: DataService, private route: ActivatedRoute) {
+
+  private onMemberChangeStatus: Subscription;
+  private onMemberEnterToGroup: Subscription;
+
+  constructor(private dataService: DataService,
+              private route: ActivatedRoute,
+              private websocketEmulatorService: WebsocketEmulatorService) {
   }
 
   ngOnInit() {
@@ -39,6 +48,7 @@ export class GroupListComponent implements OnInit {
     this.dataService.getGroups().subscribe(groups => {
       this.groups = groups;
       this.onRouteChange();
+      this.subscribeToWs();
     });
   }
 
@@ -48,11 +58,36 @@ export class GroupListComponent implements OnInit {
       const id = +this.groupId;
       return this.groups.find(group => id === group.id).members;
     }
+    return this.allMembers;
+  }
+
+  get allMembers() {
     let members = [];
     this.groups.forEach(group => {
       members = [...members, ...group.members];
     });
     return members;
+  }
+
+  private subscribeToWs() {
+    this.onMemberChangeStatus = this.websocketEmulatorService.on(WebsocketEvent.CHANGE_STATUS).subscribe(event => {
+      const currentMember = this.allMembers.find( m => m.id === event.data.member.id);
+      currentMember.phoneState = event.data.member.phoneState;
+      currentMember.active = event.data.member.active;
+      }
+    );
+    this.onMemberEnterToGroup = this.websocketEmulatorService.on(WebsocketEvent.MEMBER_ADD).subscribe(event => {
+      this.groups[event.data.groupId].members.push(event.data.member);
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.onMemberEnterToGroup) {
+      this.onMemberEnterToGroup.unsubscribe();
+    }
+    if (this.onMemberChangeStatus) {
+      this.onMemberChangeStatus.unsubscribe();
+    }
   }
 
 }

@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { WebsocketEmulatorService } from './websocket-emulator.service';
+import {WebsocketEmulatorService} from './websocket-emulator.service';
 
 describe('WebsocketEmulatorService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
