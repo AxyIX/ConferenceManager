@@ -19,7 +19,7 @@ export class WebsocketEmulatorService {
   private groups: Group[] = this.data.groups;
 
   private websocketMessages$ = new Subject<WebsocketMessage>();
-  source = interval(2000);
+  source = interval(1000);
 
   constructor( private data: InMemoryDataService) {
     this.source.subscribe(() => {
@@ -33,25 +33,15 @@ export class WebsocketEmulatorService {
 
       switch (behavior) {
         case 0:
-          if (!this.groupsContainsMember(member)) {
-            return;
-          }
           this.changeActive(member);
           message.type = WebsocketEvent.CHANGE_STATUS;
           break;
         case 1:
-          if (!this.groupsContainsMember(member)) {
-            return;
-          }
           this.changePhoneState(member);
           message.type = WebsocketEvent.CHANGE_STATUS;
           break;
         case 2:
-          if (this.groupsContainsMember(member)) {
-            return;
-          }
           const groupId = Math.floor(Math.random() * this.groups.length);
-          // this.addMemberToGroup(groupId, member);
           message.type = WebsocketEvent.MEMBER_ADD;
           message.data = {...message.data, groupId};
           break;
@@ -90,20 +80,5 @@ export class WebsocketEmulatorService {
         member.active = true;
         break;
     }
-  }
-
-  private addMemberToGroup(groupId: number, member: Member) {
-    this.groups[groupId].members.push(member);
-  }
-
-  private groupsContainsMember(member: Member): boolean {
-    for (const g of this.groups) {
-      for (const m of g.members) {
-        if (m === member) {
-          return true;
-        }
-      }
-    }
-    return false;
   }
 }

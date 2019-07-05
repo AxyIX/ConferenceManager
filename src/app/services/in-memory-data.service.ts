@@ -3,9 +3,6 @@ import {InMemoryDbService} from 'angular-in-memory-web-api';
 import {PhoneState} from '../models/PhoneState';
 import {Member} from '../models/Member';
 import {Group} from '../models/Group';
-import {WebsocketMessage} from '../websocket/websocket-message';
-import {WebsocketEvent} from '../websocket/websocket-event.enum';
-import {Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -41,12 +38,8 @@ export class InMemoryDataService implements InMemoryDbService {
     }
   ];
 
-  private websocketMessages$ = new Subject<WebsocketMessage>();
-
   constructor() {
   }
-
-  // in memory data
 
   createDb() {
     return {groups: this.groups};
@@ -55,15 +48,8 @@ export class InMemoryDataService implements InMemoryDbService {
   delete(req) {
     switch (req.resourceUrl) {
       case 'api/groups/':
-        // this.deleteMemberFromGroup(+req.query.get('groupId'), +req.query.get('memberId'));
+        console.log(`delete from group=${req.query.get('groupId')}, user=${+req.query.get('memberId')}`);
         break;
-    }
-  }
-
-  deleteMemberFromGroup(groupId, memberId) {
-    const group = this.groups.find(g => g.id === groupId);
-    if (group) {
-      group.members = group.members.filter( m => m.id !== memberId);
     }
   }
 }
