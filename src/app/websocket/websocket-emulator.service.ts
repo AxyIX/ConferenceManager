@@ -76,8 +76,11 @@ export class WebsocketEmulatorService {
         member.phoneState = PhoneState.IDLE;
         break;
       case PhoneState.IDLE:
-        member.phoneState = PhoneState.ALERT;
-        member.active = true;
+        if (member.active) {
+          member.phoneState = PhoneState.ALERT;
+        } else {
+          member.active = true;
+        }
         break;
     }
   }

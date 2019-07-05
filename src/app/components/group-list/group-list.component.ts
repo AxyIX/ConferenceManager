@@ -72,9 +72,19 @@ export class GroupListComponent implements OnInit, OnDestroy {
   }
 
   deleteMember = (member) => {
+    if (!this.groupId) {
+      return;
+    }
     const id = +this.groupId;
-    const group = this.groups.find(g => g.id === id);
-    group.members = group.members.filter(m => m.id !== member.id);
+    this.dataService.deleteMemberFromGroup(id, member).subscribe(
+      event => {
+        const group = this.groups.find(g => g.id === id);
+        group.members = group.members.filter(m => m.id !== member.id);
+      },
+      error => {
+        console.error(error);
+      }
+    );
   }
 
   private subscribeToWs() {
