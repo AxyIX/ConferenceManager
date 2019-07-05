@@ -6,7 +6,6 @@ import {Group} from '../../models/Group';
 import {DataService} from '../../services/data.service';
 import {WebsocketEvent} from '../../websocket/websocket-event.enum';
 import {WebsocketEmulatorService} from '../../websocket/websocket-emulator.service';
-import {Member} from '../../models/Member';
 
 @Component({
   selector: 'app-group-list',
@@ -55,7 +54,9 @@ export class GroupListComponent implements OnInit, OnDestroy {
   }
 
   get currentMembers() {
-    if (!this.groups) { return; }
+    if (!this.groups) {
+      return;
+    }
     if (this.groupId !== undefined) {
       const id = +this.groupId;
       return this.groups.find(group => id === group.id).members;
@@ -81,20 +82,20 @@ export class GroupListComponent implements OnInit, OnDestroy {
         console.error(error);
       }
     );
-  }
+  };
 
   private subscribeToWs() {
     this.onMemberChangeStatus = this.websocketEmulatorService.on(WebsocketEvent.CHANGE_STATUS).subscribe(event => {
-      const currentMember = this.allMembers.find( m => m.id === event.data.member.id);
-      if (!currentMember) {
-        return;
-      }
-      currentMember.phoneState = event.data.member.phoneState;
-      currentMember.active = event.data.member.active;
+        const currentMember = this.allMembers.find(m => m.id === event.data.member.id);
+        if (!currentMember) {
+          return;
+        }
+        currentMember.phoneState = event.data.member.phoneState;
+        currentMember.active = event.data.member.active;
       }
     );
     this.onMemberEnterToGroup = this.websocketEmulatorService.on(WebsocketEvent.MEMBER_ADD).subscribe(event => {
-      const currentMember = this.allMembers.find( m => m.id === event.data.member.id);
+      const currentMember = this.allMembers.find(m => m.id === event.data.member.id);
       if (currentMember) {
         return;
       }

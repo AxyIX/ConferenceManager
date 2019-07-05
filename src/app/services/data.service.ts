@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {catchError} from 'rxjs/operators';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 import {Group} from '../models/Group';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Member} from '../models/Member';
 
 @Injectable({
@@ -11,6 +11,7 @@ import {Member} from '../models/Member';
 })
 export class DataService {
   private baseUrl = 'api/groups';
+
   constructor(private client: HttpClient) {
   }
 
@@ -28,7 +29,7 @@ export class DataService {
       return of(undefined);
     }
     const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+      headers: new HttpHeaders({'Content-Type': 'application/json'})
     };
     const url = `${this.baseUrl}/?groupId=${id}&memberId=${member.id}`;
     return this.client.delete(url, httpOptions);

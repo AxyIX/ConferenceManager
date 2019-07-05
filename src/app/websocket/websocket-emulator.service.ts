@@ -21,7 +21,7 @@ export class WebsocketEmulatorService {
   private websocketMessages$ = new Subject<WebsocketMessage>();
   source = interval(1000);
 
-  constructor( private data: InMemoryDataService) {
+  constructor(private data: InMemoryDataService) {
     this.source.subscribe(() => {
       const behavior = Math.floor(Math.random() * 3);
       const member = this.members[Math.floor(Math.random() * this.members.length)];

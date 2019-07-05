@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {InMemoryDbService} from 'angular-in-memory-web-api';
+
 import {PhoneState} from '../models/PhoneState';
 import {Member} from '../models/Member';
 import {Group} from '../models/Group';
