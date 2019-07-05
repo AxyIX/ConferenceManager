@@ -13,7 +13,7 @@ import {filter} from 'rxjs/operators';
 })
 export class InMemoryDataService implements InMemoryDbService {
 
-  private members: Member[] = [
+  members: Member[] = [
     {id: 0, name: 'Иван Иванов', active: false, phoneState: PhoneState.IDLE},
     {id: 1, name: 'Михаил Михайлов', active: true, phoneState: PhoneState.CALL},
     {id: 3, name: 'Павел Павлов', active: false, phoneState: PhoneState.IDLE},
@@ -26,7 +26,7 @@ export class InMemoryDataService implements InMemoryDbService {
     {id: 10, name: 'Роман Романов', active: false, phoneState: PhoneState.IDLE},
   ];
 
-  private groups: Group[] = [
+  groups: Group[] = [
     {
       id: 0, name: 'Группа 1', members: [
         this.members[0], this.members[1], this.members[2],
@@ -71,8 +71,8 @@ export class InMemoryDataService implements InMemoryDbService {
         type: WebsocketEvent.MEMBER_LEAVE_GROUP,
         data: {groupId, memberId}
       };
-      console.log('called event', message);
       this.websocketMessages$.next(message);
+      console.log('called event', message);
     }
     console.log('server groups', this.groups);
   }

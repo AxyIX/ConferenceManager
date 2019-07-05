@@ -24,7 +24,7 @@ export class GroupListComponent implements OnInit, OnDestroy {
 
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
-              private websocketService: InMemoryDataService) {
+              private inMemoryDataService: InMemoryDataService) {
   }
 
   ngOnInit() {
@@ -71,17 +71,17 @@ export class GroupListComponent implements OnInit, OnDestroy {
   }
 
   private subscribeToWs() {
-    this.onMemberChangeStatus = this.websocketService.on(WebsocketEvent.CHANGE_STATUS).subscribe(event => {
+    this.onMemberChangeStatus = this.inMemoryDataService.on(WebsocketEvent.CHANGE_STATUS).subscribe(event => {
       const currentMember = this.allMembers.find( m => m.id === event.data.member.id);
       currentMember.phoneState = event.data.member.phoneState;
       currentMember.active = event.data.member.active;
       }
     );
-    this.onMemberEnterToGroup = this.websocketService.on(WebsocketEvent.MEMBER_ADD).subscribe(event => {
+    this.onMemberEnterToGroup = this.inMemoryDataService.on(WebsocketEvent.MEMBER_ADD).subscribe(event => {
       this.groups[event.data.groupId].members.push(event.data.member);
     });
 
-    this.onMemberLeaveGroup = this.websocketService.on(WebsocketEvent.MEMBER_LEAVE_GROUP).subscribe(event => {
+    this.onMemberLeaveGroup = this.inMemoryDataService.on(WebsocketEvent.MEMBER_LEAVE_GROUP).subscribe(event => {
       alert('delete user');
       this.groups[event.data.groupId].members = this.groups[event.data.groupId].members.filter(m => m.id !== event.data.memberId);
     });
