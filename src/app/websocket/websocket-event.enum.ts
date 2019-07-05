@@ -1,4 +1,5 @@
 export enum WebsocketEvent {
   MEMBER_ADD = 'MEMBER_ADD',
   CHANGE_STATUS = 'CHANGE_ACTIVE',
+  MEMBER_LEAVE_GROUP = 'MEMBER_LEAVE_GROUP'
 }

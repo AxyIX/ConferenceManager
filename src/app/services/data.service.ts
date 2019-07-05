@@ -27,7 +27,6 @@ export class DataService {
     if (id === undefined) {
       return of(undefined);
     }
-    console.log(`deleting member: ${member.id}, from group: ${id}.`);
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };

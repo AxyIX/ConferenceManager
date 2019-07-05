@@ -7,45 +7,21 @@ import {WebsocketMessage} from './websocket-message';
 import {Member} from '../models/Member';
 import {PhoneState} from '../models/PhoneState';
 import {Group} from '../models/Group';
+import {InMemoryDataService} from '../services/in-memory-data.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebsocketEmulatorService {
 
-  private members: Member[] = [
-    {id: 0, name: 'Иван Иванов', active: false, phoneState: PhoneState.IDLE},
-    {id: 1, name: 'Михаил Михайлов', active: true, phoneState: PhoneState.CALL},
-    {id: 3, name: 'Павел Павлов', active: false, phoneState: PhoneState.IDLE},
-    {id: 4, name: 'Василий Васин', active: false, phoneState: PhoneState.IDLE},
-    {id: 5, name: 'Алексей Алексеев', active: true, phoneState: PhoneState.CALL},
-    {id: 6, name: 'Дмитрий Дмитриев', active: false, phoneState: PhoneState.IDLE},
-    {id: 7, name: 'Николай Николаев', active: false, phoneState: PhoneState.IDLE},
-    {id: 8, name: 'Денис Денисов', active: false, phoneState: PhoneState.IDLE},
-    {id: 9, name: 'Станислав Стасов', active: false, phoneState: PhoneState.IDLE},
-    {id: 10, name: 'Роман Романов', active: false, phoneState: PhoneState.IDLE},
-  ];
+  private members: Member[] = this.data.members;
 
-  private groups: Group[] = [
-    {
-      id: 0, name: 'Группа 1', members: [
-        this.members[0], this.members[1], this.members[2],
-      ]
-    },
-    {
-      id: 1, name: 'Группа 2', members: [
-        this.members[3], this.members[4],
-      ]
-    },
-    {
-      id: 2, name: 'Группа 3', members: []
-    }
-  ];
+  private groups: Group[] = this.data.groups;
 
   private websocketMessages$ = new Subject<WebsocketMessage>();
   source = interval(2000);
 
-  constructor() {
+  constructor( private data: InMemoryDataService) {
     this.source.subscribe(() => {
       const behavior = Math.floor(Math.random() * 3);
       const member = this.members[Math.floor(Math.random() * this.members.length)];
@@ -55,7 +31,6 @@ export class WebsocketEmulatorService {
         data: {member}
       };
 
-      console.log(behavior, member.id);
       switch (behavior) {
         case 0:
           if (!this.groupsContainsMember(member)) {
